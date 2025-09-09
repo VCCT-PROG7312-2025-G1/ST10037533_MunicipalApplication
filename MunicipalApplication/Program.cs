@@ -1,3 +1,27 @@
+using System;
+using System.Windows.Forms;
+
+namespace MunicipalApplication
+{
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            var repository = new Data.IssueRepository();
+            var controller = new Controllers.IssueController(repository);
+
+            controller.LoadFromFile();
+
+            Application.Run(new MainForm());
+        }
+    }
+}
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
