@@ -1,8 +1,46 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Main Menu";
+    var count = (int)ViewBag.IssueCount;
+    var target = 10; // same engagement target shown as context
+}
+@layout "~/Views/Shared/_Layout.cshtml"
+
+
+<div class="menu">
+    <button onclick="location.href='@Url.Action("Index", "Report")'" class="primary">Report Issues</button>
+    <button disabled title="Coming later" class="disabled">Local Events & Announcements (coming later)</button>
+    <button disabled title="Coming later" class="disabled">Service Request Status (coming later)</button>
+</div>
+
+
+<div class="engagement">
+    <h3>Community Engagement</h3>
+    <div class="progress-wrap">
+        <progress id="engProgress" max="@target" value="@count"></progress>
+        <div id="engLabel">@GetEncouragingMessage(count)</div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        // small helper in the view to update label when page loads
+        function updateLabel() {
+        const label = document.getElementById('engLabel');
+        label.style.fontWeight = '600';
+        }
+        updateLabel();
+    </script>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+@functions {
+    string GetEncouragingMessage(int count)
+    {
+        if (count == 0) return "Be the first to report — help improve our community!";
+        if (count < 3) return "Great start — every report helps. Keep them coming!";
+        if (count < 7) return "Nice work — community participation is growing.";
+        if (count < 10) return "Almost there — let's reach our community target of 10 reports!";
+        return "Amazing — community engagement target reached! Thank you.";
+    }
+}

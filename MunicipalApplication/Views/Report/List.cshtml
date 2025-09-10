@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MunicipalServicesMVC.Models.Issue>
+@{
+    ViewData["Title"] = "All Reports";
+}
+@layout "~/Views/Shared/_Layout.cshtml"
+
+
+<h2>All Submitted Reports</h2>
+<table class="issues-table">
+    <thead>
+        <tr><th>When</th><th>Location</th><th>Category</th><th>Attachment</th><th>Details</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.SubmittedAt.ToLocalTime().ToString("g")</td>
+                <td>@item.Location</td>
+                <td>@item.Category</td>
+                <td>@(string.IsNullOrEmpty(item.AttachmentPath) ? "—" : html.Raw($"<a href='{item.AttachmentPath}' target='_blank'>view</a>"))</td>
+                <td><a href="@Url.Action("Details", "Report", new { id = item.Id })">Details</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

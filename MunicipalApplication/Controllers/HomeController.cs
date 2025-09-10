@@ -1,32 +1,22 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MunicipalApplication.Models;
+using MunicipalApplication.Services;
 
 namespace MunicipalApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IIssueRepository _repository;
+        public HomeController(IIssueRepository repository)
         {
-            _logger = logger;
+            _repository = repository;
         }
-
         public IActionResult Index()
         {
+            var issueCount = _repository.GetIssueCount();
+            ViewBag.IssueCount = issueCount;
             return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
