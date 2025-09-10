@@ -1,0 +1,49 @@
+﻿@model System.Collections.Generic.LinkedList<MunicipalApplication.Models.Issue>
+@{
+    ViewBag.Title = "All Reports";
+}
+
+
+<h2>All Submitted Reports</h2>
+
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>When (UTC)</th>
+            <th>Location</th>
+            <th>Category</th>
+            <th>Attachment</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.SubmittedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@item.Location</td>
+                <td>@item.Category</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.AttachmentPath))
+                    {
+                        <a href="@item.AttachmentPath" target="_blank">View</a>
+                    }
+                    else
+                    {
+                        @:<span class="text-muted">—</span>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "Report", new { id = item.Id })" class="btn btn-sm btn-info">Open</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

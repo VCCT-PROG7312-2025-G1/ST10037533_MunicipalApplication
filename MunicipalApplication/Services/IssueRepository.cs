@@ -1,4 +1,5 @@
 ﻿using MunicipalApplication.Models;
+using MunicipalApplication.Services;
 using System.Collections.Generic;
 using System;
 using System.Linq;
@@ -7,32 +8,26 @@ namespace MunicipalApplication.Services
 {
     public class IssueRepository : IIssueRepository
     {
-        private readonly LinkedList<Issue> issues = new LinkedList<Issue>();
+        private static readonly IssueRepository _instance = new IssueRepository();
+        private readonly LinkedList<Issue> _issues = new LinkedList<Issue>();
+
+        public IssueRepository() { }
+
+        public static IssueRepository Instance => _instance;
+
+
+        public int Count => _issues.Count;
+
+
         public void AddIssue(Issue issue)
         {
-            if (issue == null) throw new ArgumentNullException(nameof(issue));
-            issues.AddLast(issue);
+            _issues.AddFirst(issue);
         }
-        public IEnumerable<Issue> GetAllIssues()
+
+
+        public LinkedList<Issue> GetAllIssues()
         {
-            foreach (var i in issues)
-                yield return i;
+            return _issues;
         }
-        public int GetIssueCount()
-        {
-            return issues.Count;
-        }
-        public Issue GetIssueById(Guid id)
-        {
-            var node = issues.First;
-            while (node != null)
-            {
-                if (node.Value.Id == id)
-                    return node.Value;
-                node = node.Next;
-            }
-            return null;
-        }
-        public int Count => issues.Count;
     }
 }

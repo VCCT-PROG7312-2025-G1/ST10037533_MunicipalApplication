@@ -1,21 +1,22 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MunicipalApplication.Models
 {
-    public enum IssueCategory{
-        Pothole,
-        StreetlightOut,
-        Lighting,
-        WaterLeak,
-        Other
-    }
     public class Issue
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public DateTime DateReported { get; set; } = DateTime.Now;
-        public string Location { get; set; } = string.Empty;
-        public IssueCategory Category { get; set; } 
-        public string Description { get; set; } = string.Empty;
-        public string Status { get; set; } = "Submitted";
+
+        [Required(ErrorMessage = "Location is required.")]
+        public string Location { get; set; }
+
+        [Required(ErrorMessage = "Category is required.")]
+        public string Category { get; set; }
+
+        [Required(ErrorMessage = "Description is required.")]
+        public string Description { get; set; }
+
+        public string AttachmentPath { get; set; }
+        public DateTime SubmittedAt { get; set; }
     }
 }

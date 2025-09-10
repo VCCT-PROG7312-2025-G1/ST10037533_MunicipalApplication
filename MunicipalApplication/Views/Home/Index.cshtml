@@ -1,46 +1,24 @@
 ﻿@{
-    ViewData["Title"] = "Main Menu";
-    var count = (int)ViewBag.IssueCount;
-    var target = 10; // same engagement target shown as context
+    ViewBag.Title = "Main Menu";
+    var count = ViewBag.ReportCount ?? 0;
+    var target = ViewBag.ReportTarget ?? 10;
 }
-@layout "~/Views/Shared/_Layout.cshtml"
 
 
-<div class="menu">
-    <button onclick="location.href='@Url.Action("Index", "Report")'" class="primary">Report Issues</button>
-    <button disabled title="Coming later" class="disabled">Local Events & Announcements (coming later)</button>
-    <button disabled title="Coming later" class="disabled">Service Request Status (coming later)</button>
-</div>
+<div class="jumbotron">
+    <h1 class="display-5">Welcome to Municipal Services</h1>
+    <p class="lead">Report issues, stay informed about local events, and track your service requests.</p>
+    <hr class="my-4">
+    <p>Select an option below to get started.</p>
 
 
-<div class="engagement">
-    <h3>Community Engagement</h3>
-    <div class="progress-wrap">
-        <progress id="engProgress" max="@target" value="@count"></progress>
-        <div id="engLabel">@GetEncouragingMessage(count)</div>
+    <div class="list-group">
+        <a href="@Url.Action("Submit", "Report")" class="list-group-item list-group-item-action">Report an Issue</a>
+        <a href="#" class="list-group-item list-group-item-action disabled" aria-disabled="true">Local Events and Announcements (Coming soon)</a>
+        <a href="#" class="list-group-item list-group-item-action disabled" aria-disabled="true">Service Request Status (Coming soon)</a>
     </div>
+
+
+    <br />
+    <p class="mt-2"><small>Every report helps us improve our city. Thank you for your participation.</small></p>
 </div>
-
-
-@section Scripts {
-    <script>
-        // small helper in the view to update label when page loads
-        function updateLabel() {
-        const label = document.getElementById('engLabel');
-        label.style.fontWeight = '600';
-        }
-        updateLabel();
-    </script>
-}
-
-
-@functions {
-    string GetEncouragingMessage(int count)
-    {
-        if (count == 0) return "Be the first to report — help improve our community!";
-        if (count < 3) return "Great start — every report helps. Keep them coming!";
-        if (count < 7) return "Nice work — community participation is growing.";
-        if (count < 10) return "Almost there — let's reach our community target of 10 reports!";
-        return "Amazing — community engagement target reached! Thank you.";
-    }
-}

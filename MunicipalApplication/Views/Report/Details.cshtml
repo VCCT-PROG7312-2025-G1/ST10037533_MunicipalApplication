@@ -1,0 +1,19 @@
+﻿@model MunicipalApplication.Models.Issue
+@{
+    ViewBag.Title = "Report Details";
+}
+
+
+<h2>Report Details</h2>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Category — @Model.Location</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Submitted: @Model.SubmittedAt.ToString("yyyy-MM-dd HH:mm") (UTC)</h6>
+        <p class="card-text">@Model.Description</p>
+        @if (!string.IsNullOrEmpty(Model.AttachmentPath))
+        {
+            <p>Attachment: <a href="@Model.AttachmentPath" target="_blank">Open</a></p>
+        }
+        <a href="@Url.Action("AllReports", "Report")" class="btn btn-secondary">Back to list</a>
+    </div>
+</div>

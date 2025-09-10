@@ -6,9 +6,7 @@ namespace MunicipalApplication.Services
     public interface IIssueRepository
     {
         void AddIssue(Issue issue);
-        IEnumerable<Issue> GetAllIssues();
-        int GetIssueCount();
-        void SaveToFile();
-        void LoadFromFile();
+        LinkedList<Issue> GetAllIssues();
+        int Count { get; }
     }
 }

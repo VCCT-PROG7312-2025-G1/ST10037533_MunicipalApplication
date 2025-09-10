@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Submission Successful";
+}
+
+<div class="jumbotron text-center">
+    <h1 class="display-4">Thank you!</h1>
+    <p class="lead">Your report has been submitted successfully.</p>
+    <hr class="my-4">
+    <p>You can now return to the main menu or submit another report.</p>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">Main Menu</a>
+    <a href="@Url.Action("Submit", "Report")" class="btn btn-success btn-lg">Submit Another Issue</a>
+</div>

@@ -7,15 +7,10 @@ namespace MunicipalApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IIssueRepository _repository;
-        public HomeController(IIssueRepository repository)
+        public ActionResult Index()
         {
-            _repository = repository;
-        }
-        public IActionResult Index()
-        {
-            var issueCount = _repository.GetIssueCount();
-            ViewBag.IssueCount = issueCount;
+            ViewBag.ReportCount = IssueRepository.Instance.Count;
+            ViewBag.ReportTarget = 10; 
             return View();
         }
     }
